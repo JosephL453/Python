@@ -9,18 +9,18 @@ HEIGHT = 600
 
 message = ""
 
-alien = Actor("alien.png")
+bullseye = Actor("bullseye.png")
 
 
-def place_alien():
-    alien.x = randint(50, WIDTH - 50)
-    alien.y = randint(50, HEIGHT - 50)
+def place_bullseye():
+    bullseye.x = randint(50, WIDTH - 400)
+    bullseye.y = randint(50, HEIGHT - 300)
 
 def draw():
     screen.clear()
     screen.fill(color = (128, 0, 0))
-    # place_alien()
-    alien.draw()
+
+    bullseye.draw()
     screen.draw.text(message, center = (400, 50), fontsize = 60)
     
 
@@ -29,11 +29,11 @@ def draw():
 
 def on_mouse_down(pos):
     global message
-    if alien.collidepoint(pos):
+    if bullseye.collidepoint(pos):
         message = "Good Shot"
-        place_alien()
+        place_bullseye()
     else:
         message = "You Missed"
     
-place_alien()
+place_bullseye()
 pgzrun.go()
