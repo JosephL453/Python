@@ -1,39 +1,61 @@
 import pgzrun
 from random import randint
 
-TITLE = "Good Shot"
 
-WIDTH = 800
+WIDTH = 600
+HEIGHT = 500
 
-HEIGHT = 600
+score = 0
+gameover = False
 
-message = ""
+bee = Actor("bee.png")
+bee.pos = (100,100)
 
-bullseye = Actor("bullseye.png")
-
-
-def place_bullseye():
-    bullseye.x = randint(50, WIDTH - 400)
-    bullseye.y = randint(50, HEIGHT - 300)
+flower = Actor("flower.png")
 
 def draw():
-    screen.clear()
-    screen.fill(color = (128, 0, 0))
+    screen.blit("background.png", (0,0))
+    bee.draw()
+    flower.draw()
+    screen.draw.text("Score: " + str(score), color = "Black", topleft = (10,10))
 
-    bullseye.draw()
-    screen.draw.text(message, center = (400, 50), fontsize = 60)
+    if gameover:
+        screen.fill("pink")
+        screen.draw.text("TIME UP, FINAL SCORE: " + str(score), color = "Red", fontsize = 50, midtop = (300,25))
+
+
+def place_flower():
+    flower.x = (randint(70, WIDTH - 70))
+    flower.y = (randint(70, HEIGHT - 70))
+
+def time_up():
+    global gameover
+    gameover = True
+
+
+def update():
+    global score
+    if keyboard.left:
+        bee.x -= 2
     
+    if keyboard.right:
+        bee.x += 2
 
-
-
-
-def on_mouse_down(pos):
-    global message
-    if bullseye.collidepoint(pos):
-        message = "Good Shot"
-        place_bullseye()
-    else:
-        message = "You Missed"
+    if keyboard.up:
+        bee.y -= 2
     
-place_bullseye()
+    if keyboard.down:
+        bee.y += 2
+    
+    flower_collected = bee.colliderect(flower)
+
+    if flower_collected:
+        score += 10
+        place_flower()
+
+
+clock.schedule(time_up, 60.0)
 pgzrun.go()
+
+
+
