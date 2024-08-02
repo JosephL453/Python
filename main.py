@@ -8,10 +8,10 @@ HEIGHT = 500
 score = 0
 gameover = False
 
-bee = Actor("bee.png")
+bee = Actor("ash.jpeg")
 bee.pos = (100,100)
 
-flower = Actor("flower.png")
+flower = Actor("pikachu.png")
 
 def draw():
     screen.blit("background.png", (0,0))
